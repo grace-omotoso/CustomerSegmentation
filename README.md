@@ -23,23 +23,11 @@ In this section we were able to extract members of the general population that a
 In this section, we created a model for prediction on a test data. We used RandomForestClassifier and XGBoostClassifier to make our predictions. One of the challenges we ran into was inbalance dataset. However, we used Synthetic Minority Oversampling Technique (SMOTE). Also we were able to create a custom data cleansing transformer that we used in our machine learning pipeline.
 
 #### Project Files
+- Arvato Project Workbook: This notebook contains the code for our anlaysis
+- custom_cleaning_transformer.py: This module contains the class for our data cleaning
+- work_life_balance.xlsx: This spreadsheet is used to create a dictionary that is used to transform one of the columns in the dataset
 
+Note: Due to legal reasons, the dataset  was not uploaded with the project. You can contact me via gracomot@gmail.com for more information about the data.
 
 ### Installation
-Most of the libraries needed comes pre-installed with python but some other installations are needed:
--   SQLAlchemy: `pip install SQLAlchemy`
--   nltk: `pip install --user -U nltk`
--   plotly: `pip install plotly`
-### Instructions:
-1. Run the following commands in the project's root directory to set up your database and model.
-
-    - To run ETL pipeline that cleans data and stores in database
-        `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
-    - To run ML pipeline that trains classifier and saves
-        `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
-
-2. Go to `app` directory: `cd app`
-
-3. Run your web app: `python run.py`
-
-4. Click the `PREVIEW` button to open the homepage
+Most of the libraries needed comes pre-installed with python but feel free to install any new module this project requires
