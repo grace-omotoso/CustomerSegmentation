@@ -12,6 +12,12 @@ class DataSetCleaner(BaseEstimator, TransformerMixin):
         # remove duplicates
         X = X.copy()
         X = X.drop_duplicates()
+        # get and drop columns with majority NAN
+        #X_clean = drop_rows_with_majority_NAN(X)
+        # get and drop columns with majority NAN
+        #nan_columns = get_columns_with_majority_NAN(X_clean)
+        #X_clean.drop(nan_columns, axis=1, inplace=True)
+        
         # replace string values with floats
         # Convert CAMEO_DEUG_2015 to float
         X = preprocess_df_column(X, 'CAMEO_DEUG_2015', 0, 'X', '-1')
@@ -35,37 +41,17 @@ class DataSetCleaner(BaseEstimator, TransformerMixin):
     
         return X
         
-    def transform1(self, df):
-        # remove duplicates
-        df = df.copy()
-        df = df.drop_duplicates()
-        # replace string values with floats
-        # Convert CAMEO_DEUG_2015 to float
-        df = preprocess_df_column(df, 'CAMEO_DEUG_2015', 0, 'X', '-1')
-        # Convert CAMEO_DEU_2015 to float
-        wlb_dict = dict(zip(df_wlb['wlb_code'], df_wlb['category_value']))
-        df = self.preprocess_df_column(df, 'CAMEO_DEU_2015', 0, 'XX', '-1', wlb_dict)
-        # Convert CAMEO_INTL_2015 to float
-        df = self.preprocess_df_column(df, 'CAMEO_INTL_2015', 0, 'XX', '-1')
-        # Convert OST_WEST_KZ to float
-        gdr_frg = {'O': 0, 'W': 1}
-        df = self.preprocess_df_column(df, 'OST_WEST_KZ', 0, rpl_dict = gdr_frg)
-        if has_extras:
-            # Convert PRODUCT_GROUP to float
-            prdt_grp = {'FOOD': 1, 'COSMETIC': 2, 'COSMETIC_AND_FOOD': 3}
-            df = preprocess_df_column(df, 'PRODUCT_GROUP', rpl_dict = prdt_grp)
-            # Convert Customer CUSTOMER_GROUP to float
-            cust_grp = {'MULTI_BUYER': 1 , 'SINGLE_BUYER': 2}
-            df = preprocess_df_column(df, 'CUSTOMER_GROUP', 0, rpl_dict = cust_grp)
-        # Most of our columns should now have numeric values. We will drop the ones that do not have float values
-        # We have identified the two columns: 'D19_LETZTER_KAUF_BRANCHE' and 'EINGEFUEGT_AM'
-        # The column EINGEFUEGT_AM contains timestamp in string format, we will extract the year and drop the other column
-        df['EINGEFUEGT_AM'] = pd.to_datetime(df['EINGEFUEGT_AM'])
-        df['EINGEFUEGT_AM'] = df['EINGEFUEGT_AM'].dt.year
-        df.drop(['D19_LETZTER_KAUF_BRANCHE'], axis = 1, inplace = True )
-        # replace all NAN with -1
-        df = df.fillna(-1)
-        return df
+def get_columns_with_majority_NAN(df):
+    missing_percentage = df.isna().mean()
+    # Select columns where more than 75% of the data is NaN
+    columns_with_75_percent_nan = missing_percentage[missing_percentage > 0.75].index
+    return list(columns_with_75_percent_nan)
+
+def drop_rows_with_majority_NAN(df):
+    missing_percentage_per_row = df.isna().mean(axis=1)
+    # Drop rows where more than 50% of the data is NaN
+    df_cleaned = df[missing_percentage_per_row <= 0.50]
+    return df_cleaned
         
 def preprocess_df_column(df, column, nan_value= None, str_to_replace=None, replacement_str=None, rpl_dict=None):
     """ 
