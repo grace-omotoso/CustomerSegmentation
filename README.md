@@ -1,7 +1,7 @@
 
 # Customer Segmentation
 ### Description
-In this project, we analyzed demographics data for customers of a mail-order sales company in Germany, comparing it against demographics information for the general population. We used unsupervised learning techniques to perform customer segmentation, identifying the parts of the population that best describe the core customer base of the company. Then, we applied what you've learned on a third dataset with demographics information for targets of a marketing campaign for the company, and use a model to predict which individuals are most likely to convert into becoming customers for the company. The data we used has been provided by our partners at Bertelsmann Arvato Analytics, and represents a real-life data science task.
+In this project, we analyzed demographics data for customers of a mail-order sales company in Germany, comparing it against demographics information for the general population. We used unsupervised learning techniques to perform customer segmentation, identifying the parts of the population that best describe the core customer base of the company. Then, we applied what we've learned on a third dataset with demographics information for targets of a marketing campaign for the company, and use a model to predict which individuals are most likely to convert into becoming customers for the company. The data we used has been provided by udacity partners at Bertelsmann Arvato Analytics, and represents a real-life data science task.
 
 ### Project Breakdown
 There are four parts to this project as discused below:
@@ -31,3 +31,5 @@ Note: Due to legal reasons, the dataset  was not uploaded with the project. You 
 
 ### Installation
 Most of the libraries needed comes pre-installed with python but feel free to install any new module this project requires
+
+**Note** This [blog](https://medium.com/@gracomot_30241/customer-segmentation-a-case-study-of-averto-bertelsmann-903a3edbc44b) has  more details about our analysis, 
